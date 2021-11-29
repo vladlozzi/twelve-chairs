@@ -3,6 +3,7 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category = categories(:one)
+    @other_category = "OtherString"
   end
 
   test "should get index" do
@@ -17,10 +18,16 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category" do
     assert_difference('Category.count') do
+      post categories_url, params: { category: { category: @other_category } }
+    end
+    assert_redirected_to category_url(Category.last)
+  end
+
+  test "should not create the same category" do
+    assert_no_difference('Category.count') do
       post categories_url, params: { category: { category: @category.category } }
     end
-
-    assert_redirected_to category_url(Category.last)
+    assert_response :unprocessable_entity
   end
 
   test "should show category" do
@@ -42,7 +49,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Category.count', -1) do
       delete category_url(@category)
     end
-
     assert_redirected_to categories_url
   end
 end

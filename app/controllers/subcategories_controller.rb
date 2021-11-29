@@ -1,5 +1,6 @@
 class SubcategoriesController < ApplicationController
   before_action :set_subcategory, only: %i[ show edit update destroy ]
+  before_action :set_categories_for_select, only: %i[ new edit create update ]
 
   # GET /subcategories or /subcategories.json
   def index
@@ -66,4 +67,12 @@ class SubcategoriesController < ApplicationController
     def subcategory_params
       params.require(:subcategory).permit(:subcategory, :category_id)
     end
+
+    def set_categories_for_select
+      @categories_for_select = []
+      Category.select("category, id").each do |row|
+        @categories_for_select.push([row[:category], row[:id]])
+      end
+    end
+
 end

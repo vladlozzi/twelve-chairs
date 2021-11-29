@@ -7,7 +7,7 @@
 
 <p>
   <strong>Category:</strong>
-  <%= @subcategory.category_id %>
+  <%= @subcategory.category[:category] %>
 </p>
 
 <%= link_to 'Edit', edit_subcategory_path(@subcategory) %> |

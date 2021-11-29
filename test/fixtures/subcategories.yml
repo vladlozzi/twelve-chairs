@@ -1,9 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  subcategory: MyString
+  subcategory: крісла для конференцій
   category: one
 
 two:
-  subcategory: MyString
+  subcategory: офісні стільці
+  category: one
+
+three:
+  subcategory: обертові офісні стільці
+  category: one
+
+four:
+  subcategory: м'які крісла
+  category: two
+
+five:
+  subcategory: табурети
   category: two
