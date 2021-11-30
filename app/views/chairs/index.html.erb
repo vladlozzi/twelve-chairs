@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Стільці, крісла, табурети</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Підкатегорія</th>
+      <th>Назва</th>
+      <th>Ціна, грн</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chairs.each do |chair| %>
+      <tr>
+        <td><%= chair.subcategory[:subcategory] %></td>
+        <td><%= chair.chair %></td>
+        <td><%= number_to_currency(chair.price, separator: ",", delimiter: " ", format: '%n') %></td>
+        <td><%= link_to 'Показати', chair %></td>
+        <td><%= link_to 'Редаг.', edit_chair_path(chair) %></td>
+        <td><%= link_to 'Видалити', chair, method: :delete, data: { confirm: 'Ви впевнені?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Додати', new_chair_path %>

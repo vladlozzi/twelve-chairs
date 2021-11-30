@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_160014) do
+ActiveRecord::Schema.define(version: 2021_11_29_143434) do
 
   create_table "categories", force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category"], name: "index_categories_on_category", unique: true
+  end
+
+  create_table "chairs", force: :cascade do |t|
+    t.integer "subcategory_id", null: false
+    t.string "chair"
+    t.decimal "price", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chair"], name: "index_chairs_on_chair", unique: true
+    t.index ["price"], name: "index_chairs_on_price"
+    t.index ["subcategory_id"], name: "index_chairs_on_subcategory_id"
   end
 
   create_table "subcategories", force: :cascade do |t|
@@ -28,5 +39,6 @@ ActiveRecord::Schema.define(version: 2021_11_26_160014) do
     t.index ["subcategory"], name: "index_subcategories_on_subcategory", unique: true
   end
 
+  add_foreign_key "chairs", "subcategories"
   add_foreign_key "subcategories", "categories"
 end

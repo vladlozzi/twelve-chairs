@@ -1,0 +1,32 @@
+<%= form_with(model: chair) do |form| %>
+  <% if chair.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(chair.errors.count, "error") %> prohibited this chair from being saved:</h2>
+
+      <ul>
+        <% chair.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :subcategory_id, "Належить до підкатегорії" %>
+    <%= form.select :subcategory_id, @subcategories_for_select %>
+  </div>
+
+  <div class="field">
+    <%= form.label :chair, "Назва" %>
+    <%= form.text_field :chair %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price, "Ціна, грн" %>
+    <%= form.text_field :price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Зберегти" %>
+  </div>
+<% end %>

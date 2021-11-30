@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Належить до підкатегорії:</strong>
+  <%= @chair.subcategory[:subcategory] %>
+</p>
+
+<p>
+  <strong>Назва:</strong>
+  <%= @chair.chair %>
+</p>
+
+<p>
+  <strong>Ціна:</strong>
+  <%= number_to_currency(@chair.price, unit: "грн", separator: ",", delimiter: " ", format: "%n %u") %>
+</p>
+
+<%= link_to 'Редагувати', edit_chair_path(@chair) %> |
+<%= link_to 'Назад', chairs_path %>

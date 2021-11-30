@@ -3,7 +3,7 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category = categories(:one)
-    @other_category = "OtherString"
+    @other_category = "CategoryOther"
   end
 
   test "should get index" do
@@ -41,7 +41,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update category" do
-    patch category_url(@category), params: { category: { category: @category.category } }
+    patch category_url(@category), params: { category: { category: @other_category } }
     assert_redirected_to category_url(@category)
   end
 
