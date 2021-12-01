@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Стільці, крісла, табурети</h1>
 
 <table>
@@ -11,7 +10,6 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @chairs.each do |chair| %>
       <tr>
@@ -19,13 +17,18 @@
         <td><%= chair.chair %></td>
         <td><%= number_to_currency(chair.price, separator: ",", delimiter: " ", format: '%n') %></td>
         <td><%= link_to 'Показати', chair %></td>
-        <td><%= link_to 'Редаг.', edit_chair_path(chair) %></td>
-        <td><%= link_to 'Видалити', chair, method: :delete, data: { confirm: 'Ви впевнені?' } %></td>
+        <% if current_user.is_admin %>
+          <td><%= link_to 'Редаг.', edit_chair_path(chair) %></td>
+          <td><%= link_to 'Видалити', chair, method: :delete, data: { confirm: 'Ви впевнені?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'Додати', new_chair_path %>
+<% if current_user.is_admin %>
+  <%= link_to 'Додати', new_chair_path %><br><br>
+<% end %>
+<%= link_to 'До підкатегорій', subcategories_path %>&nbsp; &nbsp; &nbsp;
+<%= link_to 'На головну', root_path %>

@@ -1,0 +1,30 @@
+<h1>Елітна крамниця "12 крісел"</h1>
+<h2>Якість понад усе!</h2>
+<br>
+<% if current_user.nil? %>
+  <h3><%= link_to "Вхід", new_user_session_path %></h3>
+  <h3><%= link_to "Реєстрація", new_user_registration_path %></h3>
+<% else %>
+  <table>
+    <tr>
+      <td>
+        <h3 style="width: 700px;">
+          <% if current_user.is_admin %>
+            Панель адміністратора
+          <% else %>
+            Ласкаво просимо!
+          <% end %>
+        </h3>
+      </td>
+      <td><h3><%= link_to "Вихід", destroy_user_session_path, method: :delete %></h3></td>
+    </tr>
+  </table>
+  <% if current_user.is_admin %>
+    <h3><%= link_to "Категорії товарів", categories_path %></h3>
+    <h3><%= link_to "Підкатегорії товарів", subcategories_path %></h3>
+    <h3><%= link_to "Перелік товарів", chairs_path %></h3>
+  <% else %>
+    <p>У нас Ви можете замовити зручні та надійні крісла, стільці, табурети для дому та офісу</p>
+    <h3><%= link_to "Категорії товарів", categories_path %></h3>
+  <% end %>
+<% end %>

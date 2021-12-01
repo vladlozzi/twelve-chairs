@@ -14,6 +14,7 @@
   <strong>Ціна:</strong>
   <%= number_to_currency(@chair.price, unit: "грн", separator: ",", delimiter: " ", format: "%n %u") %>
 </p>
-
-<%= link_to 'Редагувати', edit_chair_path(@chair) %> |
+<% if current_user.is_admin %>
+  <%= link_to 'Редагувати', edit_chair_path(@chair) %> |
+<% end %>
 <%= link_to 'Назад', chairs_path %>

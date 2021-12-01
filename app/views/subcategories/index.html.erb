@@ -17,13 +17,19 @@
         <td><%= subcategory.subcategory %></td>
         <td><%= subcategory.category[:category] %></td>
         <td><%= link_to 'Show', subcategory %></td>
-        <td><%= link_to 'Edit', edit_subcategory_path(subcategory) %></td>
-        <td><%= link_to 'Destroy', subcategory, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <% if current_user.is_admin %>
+          <td><%= link_to 'Edit', edit_subcategory_path(subcategory) %></td>
+          <td><%= link_to 'Destroy', subcategory, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
-<%= link_to 'New Subcategory', new_subcategory_path %>
+<% if current_user.is_admin %>
+  <%= link_to 'New Subcategory', new_subcategory_path %><br><br>
+<% end %>
+<%= link_to 'Chairs', chairs_path %>&nbsp; &nbsp; &nbsp;
+<%= link_to 'To categories', categories_path %>&nbsp; &nbsp; &nbsp;
+<%= link_to 'Go Home', root_path %>

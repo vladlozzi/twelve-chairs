@@ -10,5 +10,7 @@
   <%= @subcategory.category[:category] %>
 </p>
 
-<%= link_to 'Edit', edit_subcategory_path(@subcategory) %> |
+<% if current_user.is_admin %>
+  <%= link_to 'Edit', edit_subcategory_path(@subcategory) %> |
+<% end %>
 <%= link_to 'Back', subcategories_path %>
