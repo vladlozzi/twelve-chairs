@@ -1,6 +1,7 @@
 class ChairsController < ApplicationController
   before_action :set_chair, only: %i[ show edit update destroy ]
   before_action :set_subcategories_for_select, only: %i[ new edit create update ]
+  before_action :set_admin, only: %i[ new create edit update destroy ]
 
   # GET /chairs or /chairs.json
   def index
@@ -63,6 +64,10 @@ class ChairsController < ApplicationController
       @chair = Chair.find(params[:id])
     end
 
+    def set_admin
+      redirect_to(root_path) unless current_user.is_admin
+    end
+
     # Only allow a list of trusted parameters through.
     def chair_params
       params.require(:chair).permit(:subcategory_id, :chair, :price)
@@ -74,6 +79,5 @@ class ChairsController < ApplicationController
         @subcategories_for_select.push([row[:subcategory], row[:id]])
       end
     end
-
 
 end

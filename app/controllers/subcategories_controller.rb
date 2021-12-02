@@ -1,6 +1,7 @@
 class SubcategoriesController < ApplicationController
   before_action :set_subcategory, only: %i[ show edit update destroy ]
   before_action :set_categories_for_select, only: %i[ new edit create update ]
+  before_action :set_admin, only: %i[ new create edit update destroy ]
 
   # GET /subcategories or /subcategories.json
   def index
@@ -61,6 +62,10 @@ class SubcategoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_subcategory
       @subcategory = Subcategory.find(params[:id])
+    end
+
+    def set_admin
+      redirect_to(root_path) unless current_user.is_admin
     end
 
     # Only allow a list of trusted parameters through.

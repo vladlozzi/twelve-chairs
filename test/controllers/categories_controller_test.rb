@@ -6,6 +6,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     @other_category = "CategoryOther"
   end
 
+# Admin section
   test "should get index" do
     get categories_path
     assert_redirected_to new_user_session_url
@@ -46,7 +47,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should show category" do
+  test "should show category for admin" do
     post user_session_path, params: { user: { email: "admin@example.com", password: "secret" } }
     follow_redirect!
     get category_path(@category)
@@ -75,4 +76,67 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to categories_url
   end
+# End of admin section
+
+# Ordinary user section
+
+  test "should get index without admin links" do
+    get categories_path
+    assert_redirected_to new_user_session_url
+    follow_redirect!
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    assert_redirected_to categories_url
+    follow_redirect!
+    assert_select 'h1', "Categories"
+    assert_select 'a', count: 2 + Category.count
+    assert_select 'a[href="' + new_category_path + '"]', count: 0
+  end
+
+  test "should not get new" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    get new_category_path
+    assert_redirected_to root_url
+  end
+
+  test "should not create category" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    assert_no_difference('Category.count') do
+      post categories_path, params: { category: { category: @other_category } }
+    end
+    assert_redirected_to root_url
+  end
+
+  test "should show category for ordinary user" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    get category_path(@category)
+    assert_response :success
+  end
+
+  test "should not get edit" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    get edit_category_path(@category)
+    assert_redirected_to root_url
+  end
+
+  test "should not update category" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    patch category_path(@category), params: { category: { category: @other_category } }
+    assert_redirected_to root_url
+  end
+
+  test "should not destroy category" do
+    post user_session_path, params: { user: { email: "user@example.com", password: "secret" } }
+    follow_redirect!
+    assert_no_difference('Category.count') do
+      delete category_path(@category)
+    end
+    assert_redirected_to root_url
+  end
+# End of ordinary user section
+
 end
